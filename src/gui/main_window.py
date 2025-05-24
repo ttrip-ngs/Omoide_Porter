@@ -40,13 +40,10 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-# 親ディレクトリをパスに追加して相対インポートを可能にする
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from core.config_manager import ConfigManager
-from core.device_manager import DeviceManager
-from core.file_operations import FileOperations
-from core.models import ConnectionStatus, DeviceInfo, DeviceType, SourceType
+from ..core.config_manager import ConfigManager
+from ..core.device_manager import DeviceManager
+from ..core.file_operations import FileOperations
+from ..core.models import ConnectionStatus, DeviceInfo, DeviceType, SourceType
 
 
 class ModernFileManagerWindow(QMainWindow):
@@ -1106,7 +1103,7 @@ class ModernFileManagerWindow(QMainWindow):
             self.progress_label.setText("ファイルをスキャン中...")
 
             # ファイルをスキャン
-            from core.file_filter import FileFilter
+            from ..core.file_filter import FileFilter
 
             file_filter = FileFilter()  # デフォルトフィルタ
 
@@ -1151,7 +1148,21 @@ class ModernFileManagerWindow(QMainWindow):
             folder_pattern = "写真/{撮影年}/{撮影月}"
             filename_pattern = "{元のファイル名}"
 
-            # パスを生成            from core.path_generator import (                PathGenerator, LiteralElement, MetadataElement,                 OriginalFilenameElement            )                        folder_elements = [                LiteralElement("写真"),                MetadataElement("year"),                MetadataElement("month")            ]                        filename_elements = [                OriginalFilenameElement()            ]
+            # パスを生成
+            from ..core.path_generator import (
+                LiteralElement,
+                MetadataElement,
+                OriginalFilenameElement,
+                PathGenerator,
+            )
+
+            folder_elements = [
+                LiteralElement("写真"),
+                MetadataElement("year"),
+                MetadataElement("month"),
+            ]
+
+            filename_elements = [OriginalFilenameElement()]
 
             # ターゲットパスを生成
             self.file_operations.generate_target_paths(
@@ -1280,10 +1291,10 @@ class ModernFileManagerWindow(QMainWindow):
 
     def _create_new_preset(self):
         """新規プリセットを作成"""
-        from gui.preset_dialog import PresetManagementDialog
+        from .preset_dialog import PresetManagementDialog
 
         dialog = PresetManagementDialog(self)
-        if dialog.exec() == dialog.Accepted:
+        if dialog.exec() == QMessageBox.StandardButton.Ok:
             # プリセットコンボボックスを更新
             self._load_presets()
             self._log_message("新規プリセットが作成されました")
@@ -1297,10 +1308,10 @@ class ModernFileManagerWindow(QMainWindow):
             )
             return
 
-        from gui.preset_dialog import PresetManagementDialog
+        from .preset_dialog import PresetManagementDialog
 
         dialog = PresetManagementDialog(self, current_preset)
-        if dialog.exec() == dialog.Accepted:
+        if dialog.exec() == QMessageBox.StandardButton.Ok:
             # プリセットコンボボックスを更新
             self._load_presets()
             self._log_message(f"プリセット '{current_preset}' が更新されました")

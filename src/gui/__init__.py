@@ -2,6 +2,6 @@
 動画・写真コピーユーティリティのGUIアプリケーション
 """
 
-from .device_gui import main
+from .main_window import main
 
-__all__ = ['main'] 
+__all__ = ["main"]
