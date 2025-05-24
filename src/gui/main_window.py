@@ -1039,9 +1039,11 @@ class ModernFileManagerWindow(QMainWindow):
     def _detect_devices(self):
         """デバイス検出"""
         try:
-            devices = self.device_manager.get_connected_devices()
+            # 実際にデバイスをスキャンする
+            devices = self.device_manager.scan_devices()
             self.connected_devices = devices
             self._update_device_list()
+            self._log_message(f"デバイス検出完了: {len(devices)}台発見")
         except Exception as e:
             self._log_message(f"デバイス検出エラー: {str(e)}")
 
@@ -1050,14 +1052,19 @@ class ModernFileManagerWindow(QMainWindow):
         self.device_list.clear()
         for device in self.connected_devices:
             item_text = f"{device.display_name} ({device.device_type.value})"
-            if device.connection_status == ConnectionStatus.AVAILABLE:
+            if device.connection_status == ConnectionStatus.CONNECTED:
                 item_text += " ✅"
+            elif device.connection_status == ConnectionStatus.AUTHENTICATING:
+                item_text += " 🔒"
             elif device.connection_status == ConnectionStatus.AUTHORIZATION_REQUIRED:
                 item_text += " 🔐"
-            else:
+            elif device.connection_status == ConnectionStatus.ERROR:
                 item_text += " ❌"
+            else:
+                item_text += " ❓"
 
             item = QListWidgetItem(item_text)
+            item.setData(Qt.UserRole, device)  # デバイス情報をアイテムに保存
             self.device_list.addItem(item)
 
     def _update_file_list(self):

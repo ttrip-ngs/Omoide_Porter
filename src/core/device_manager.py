@@ -189,6 +189,11 @@ class WindowsDeviceDetector(DeviceDetector):
                                 manufacturer="Apple",
                                 protocol=TransferProtocol.AFC,
                                 connection_status=ConnectionStatus.CONNECTED,
+                                available_paths=[
+                                    "/DCIM",
+                                    "/var/mobile/Media/DCIM",
+                                    "/Media/PhotoData",
+                                ],
                             )
                             devices.append(device)
 

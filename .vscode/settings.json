@@ -18,5 +18,18 @@
     "python.analysis.autoImportCompletions": true,
     "python.analysis.extraPaths": [
         "./src"
-    ]
+    ],
+    "python.sortImports.path": "./.venv/Scripts/isort.exe",
+    "python.sortImports.args": [
+        "--profile",
+        "black"
+    ],
+    "[python]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.rulers": [
+            88
+        ],
+        "editor.wordWrapColumn": 88
+    }
 }
