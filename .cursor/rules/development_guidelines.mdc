@@ -1,0 +1,26 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Development Guidelines
+
+This document outlines key development practices and resources for this project.
+
+## Documentation
+
+Project documentation is located in the `docs` directory. Key documents include:
+
+*   Overview: [[overview.md](mdc:docs/overview.md)]
+*   System Architecture: [[system_architecture.md](mdc:docs/system_architecture.md)]
+*   Features: [[features.md](mdc:docs/features.md)]
+*   Data Structure: [[data_structure.md](mdc:docs/data_structure.md)]
+*   UI/UX Design: [[ui_ux_design.md](mdc:docs/ui_ux_design.md)]
+*   Miscellaneous: [[misc.md](mdc:docs/misc.md)]
+
+## Python Environment
+
+This project uses Python. It is recommended to manage Python versions using `pyenv` and create a project-specific virtual environment using `venv`.
+
+Refer to [[.python-version](mdc:.python-version)] for the specific Python version used in this project. The `install-pyenv-win.ps1` script can be used to set up `pyenv` on Windows. Project dependencies are listed in [[requirements.txt](mdc:requirements.txt)].
+

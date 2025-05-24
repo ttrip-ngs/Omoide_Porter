@@ -1,0 +1,39 @@
+# GUI Framework
+PySide6>=6.6.0
+
+# Image/Video Metadata
+exifread>=3.0.0
+pillow>=10.0.0
+tinytag>=1.10.0
+
+# File operations
+watchdog>=3.0.0
+
+# Configuration
+pyyaml>=6.0
+
+# Logging
+loguru>=0.7.0
+
+# Device communication
+pymobiledevice3>=3.0.0  # iOS support
+libusb1>=3.0.0          # USB operations
+
+# Cross-platform file operations
+send2trash>=1.8.0
+
+# CLI interface
+click>=8.1.0
+tabulate>=0.9.0
+
+# Async support
+aiofiles>=23.0.0
+
+# Date/time handling
+python-dateutil>=2.8.0
+
+# Development dependencies
+pytest>=7.4.0
+pytest-qt>=4.2.0
+black>=23.0.0
+mypy>=1.5.0 

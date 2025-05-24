@@ -1,0 +1,109 @@
+{
+  "version": "1.0",
+  "presets": [
+    {
+      "name": "iPhone写真整理",
+      "destination": "C:/Pictures/iPhone",
+      "folder_structure": {
+        "levels": [
+          {"type": "metadata", "field": "year"},
+          {"type": "metadata", "field": "month", "format": "%02d"}
+        ],
+        "separator": "/"
+      },
+      "file_name_pattern": {
+        "components": [
+          {"type": "metadata", "field": "datetime", "format": "YYYYMMDD_HHMMSS"},
+          {"type": "literal", "value": "_"},
+          {"type": "original_filename", "include_extension": false},
+          {"type": "original_extension"}
+        ],
+        "conflict_resolution": {
+          "type": "sequence",
+          "digits": 3,
+          "position": "before_extension"
+        }
+      },
+      "duplicate_handling": "rename",
+      "include_associated_files": true,
+      "associated_file_rules": {
+        "same_base_name": ["aae"],
+        "video_to_image": ["jpg", "jpeg"],
+        "custom_patterns": []
+      },
+      "log_level": "info"
+    },
+    {
+      "name": "カメラRAW現像",
+      "destination": "C:/Pictures/RAW",
+      "folder_structure": {
+        "levels": [
+          {"type": "literal", "value": "RAW"},
+          {"type": "metadata", "field": "year"},
+          {"type": "metadata", "field": "camera_model"}
+        ],
+        "separator": "/"
+      },
+      "file_name_pattern": {
+        "components": [
+          {"type": "original_filename"}
+        ]
+      },
+      "duplicate_handling": "skip",
+      "include_associated_files": true,
+      "associated_file_rules": {
+        "same_base_name": ["xmp", "thm"],
+        "video_to_image": [],
+        "custom_patterns": []
+      },
+      "log_level": "info"
+    }
+  ],
+  "global_settings": {
+    "default_source": "",
+    "default_destination": "C:/Users/YourName/Pictures/Organized",
+    "hash_algorithm": "sha256",
+    "cache_hashes": true,
+    "max_concurrent_operations": 4,
+    "buffer_size": 65536,
+    "device_settings": {
+      "auto_detect_devices": true,
+      "enable_device_notifications": true,
+      "connection_timeout": 30,
+      "transfer_retry_count": 3,
+      "max_device_connections": 5
+    }
+  },
+  "device_profiles": [
+    {
+      "device_id_pattern": "com\\.apple\\.iPhone.*",
+      "device_type": "iOS",
+      "display_name": "iPhone",
+      "icon": "phone",
+      "default_paths": ["/DCIM", "/PhotoData"],
+      "supported_formats": ["jpg", "jpeg", "heic", "mov", "mp4", "m4v"],
+      "requires_authentication": true,
+      "transfer_protocol": "AFC"
+    },
+    {
+      "device_id_pattern": "android.*",
+      "device_type": "Android",
+      "display_name": "Android Device", 
+      "icon": "phone-android",
+      "default_paths": ["/DCIM/Camera", "/Pictures", "/Movies"],
+      "supported_formats": ["jpg", "jpeg", "png", "mp4", "3gp", "webm"],
+      "requires_authentication": false,
+      "transfer_protocol": "MTP"
+    },
+    {
+      "device_id_pattern": "camera.*",
+      "device_type": "Camera",
+      "display_name": "Digital Camera",
+      "icon": "camera", 
+      "default_paths": ["/DCIM"],
+      "supported_formats": ["jpg", "jpeg", "raw", "cr2", "nef", "arw", "mp4", "mov"],
+      "requires_authentication": false,
+      "transfer_protocol": "PTP"
+    }
+  ]
+} 

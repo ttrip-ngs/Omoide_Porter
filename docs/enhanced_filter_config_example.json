@@ -1,0 +1,162 @@
+{
+  "version": "2.0",
+  "presets": [
+    {
+      "name": "iPhonePhotosAdvanced",
+      "source": null,
+      "destination": "/Users/username/Pictures/iPhone",
+      "folderStructure": {
+        "levels": [
+          {"type": "metadata", "field": "year"},
+          {"type": "metadata", "field": "month", "format": "%02d"}
+        ],
+        "separator": "/"
+      },
+      "fileNamePattern": {
+        "components": [
+          {"type": "metadata", "field": "datetime", "format": "YYYYMMDD_HHMMSS"},
+          {"type": "literal", "value": "_"},
+          {"type": "original_filename", "includeExtension": false},
+          {"type": "original_extension"}
+        ]
+      },
+      "duplicateHandling": "rename",
+      "includeAssociatedFiles": true,
+      "associatedFileRules": {
+        "sameBaseName": ["aae"],
+        "videoToImage": ["jpg", "jpeg"],
+        "customPatterns": []
+      },
+      "filters": {
+        "media_type": {
+          "enabled": true,
+          "priority": 10,
+          "includeTypes": ["image", "video"],
+          "excludeTypes": []
+        },
+        "screenshot": {
+          "enabled": true,
+          "priority": 50,
+          "excludeScreenshots": true,
+          "deviceType": "iOS",
+          "detection": {
+            "enableFilenamePattern": true,
+            "enablePathPattern": true,
+            "enableMetadataPattern": true,
+            "enableResolutionDetection": true,
+            "customPatterns": []
+          }
+        },
+        "date_range": {
+          "enabled": false,
+          "priority": 30,
+          "startDate": "2024-01-01",
+          "endDate": "2024-12-31",
+          "useMetadataDate": true,
+          "useFileModifiedDate": false,
+          "dateField": "datetime"
+        }
+      },
+      "logLevel": "info"
+    },
+    {
+      "name": "VacationPhotos2024",
+      "source": null,
+      "destination": "/Users/username/Pictures/Vacations/2024",
+      "folderStructure": {
+        "levels": [
+          {"type": "metadata", "field": "month", "format": "%02d"},
+          {"type": "literal", "value": "-"},
+          {"type": "metadata", "field": "day", "format": "%02d"}
+        ],
+        "separator": "/"
+      },
+      "fileNamePattern": {
+        "components": [
+          {"type": "metadata", "field": "datetime", "format": "YYYYMMDD_HHMMSS"},
+          {"type": "original_extension"}
+        ]
+      },
+      "duplicateHandling": "rename",
+      "includeAssociatedFiles": true,
+      "filters": {
+        "date_range": {
+          "enabled": true,
+          "priority": 10,
+          "startDate": "2024-06-01",
+          "endDate": "2024-08-31",
+          "useMetadataDate": true,
+          "dateField": "datetime"
+        },
+        "media_type": {
+          "enabled": true,
+          "priority": 20,
+          "includeTypes": ["image", "video"],
+          "excludeTypes": []
+        },
+        "screenshot": {
+          "enabled": true,
+          "priority": 50,
+          "excludeScreenshots": true,
+          "deviceType": "auto"
+        }
+      },
+      "logLevel": "info"
+    },
+    {
+      "name": "CameraRAWOnly",
+      "source": null,
+      "destination": "/Users/username/Pictures/RAW",
+      "folderStructure": {
+        "levels": [
+          {"type": "metadata", "field": "camera_make"},
+          {"type": "metadata", "field": "camera_model"},
+          {"type": "metadata", "field": "year"},
+          {"type": "metadata", "field": "month", "format": "%02d"}
+        ],
+        "separator": "/"
+      },
+      "fileNamePattern": {
+        "components": [
+          {"type": "metadata", "field": "datetime", "format": "YYYYMMDD_HHMMSS"},
+          {"type": "original_extension"}
+        ]
+      },
+      "duplicateHandling": "skip",
+      "includeAssociatedFiles": true,
+      "filters": {
+        "media_type": {
+          "enabled": true,
+          "priority": 10,
+          "includeTypes": ["raw"],
+          "excludeTypes": []
+        }
+      },
+      "logLevel": "info"
+    }
+  ],
+  "globalSettings": {
+    "defaultSource": "/Volumes/UNTITLED",
+    "defaultDestination": "/Users/username/Desktop/CopiedFiles",
+    "hashAlgorithm": "sha256",
+    "cacheHashes": true,
+    "maxConcurrentOperations": 4,
+    "bufferSize": 65536
+  },
+  "customFilters": {
+    "description": "カスタムフィルターを追加する際の設定例",
+    "example_custom_filter": {
+      "enabled": false,
+      "priority": 100,
+      "customParameters": {
+        "parameter1": "value1",
+        "parameter2": 42
+      }
+    }
+  },
+  "filterSettings": {
+    "enableDebugLogging": false,
+    "defaultPriority": 100,
+    "maxFilterChainLength": 20
+  }
+} 
