@@ -1,6 +1,6 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: false
 ---
 # Development Guidelines
@@ -23,4 +23,16 @@ Project documentation is located in the `docs` directory. Key documents include:
 This project uses Python. It is recommended to manage Python versions using `pyenv` and create a project-specific virtual environment using `venv`.
 
 Refer to [[.python-version](mdc:.python-version)] for the specific Python version used in this project. The `install-pyenv-win.ps1` script can be used to set up `pyenv` on Windows. Project dependencies are listed in [[requirements.txt](mdc:requirements.txt)].
+
+## Code Formatting and Quality
+
+**重要**: ファイル破損を防ぐため、コード修正時は必ず以下のルールを遵守してください：
+
+- **コードフォーマットルール**: [[code_formatting_rules.md](mdc:.cursor/rules/code_formatting_rules.md)]
+- **一行の文字数**: 88文字以内（Black設定準拠）
+- **インデント**: スペース4つ（タブ禁止）
+- **文字エンコーディング**: UTF-8を保持
+- **型チェック**: mypy対応必須
+
+詳細な設定は [[pyproject.toml](mdc:pyproject.toml)] および [[.vscode/settings.json](mdc:.vscode/settings.json)] を参照してください。
 
