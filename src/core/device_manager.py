@@ -154,9 +154,27 @@ class WindowsDeviceDetector(DeviceDetector):
 
         return devices
 
+    def _extract_ios_serial(self, device_id: str) -> str:
+        """iOSデバイスIDからシリアル番号を抽出"""
+        # デバイスIDの例: USB\VID_05AC&PID_12A8\00008140000215D9367B001C
+        # 最後の部分がシリアル番号
+        try:
+            parts = device_id.split("\\")
+            if len(parts) >= 3:
+                # シリアル番号部分を取得（最初の20文字程度）
+                serial_part = parts[-1]
+                # MI_00などのインターフェース識別子がある場合は除去
+                if "&" in serial_part:
+                    serial_part = serial_part.split("&")[0]
+                return serial_part[:20]  # 最初の20文字
+            return device_id[:20]
+        except:
+            return device_id[:20]
+
     def _detect_ios_devices(self) -> List[DeviceInfo]:
         """iOSデバイスを検出"""
         devices = []
+        seen_devices = set()  # 重複を追跡するためのセット
 
         try:
             # pymobiledevice3を使用してiOSデバイスを検出
@@ -182,11 +200,32 @@ class WindowsDeviceDetector(DeviceDetector):
                             device_name = " ".join(parts[:-1])
                             device_id = parts[-1]
 
+                            # シリアル番号を抽出して重複チェック
+                            serial_number = self._extract_ios_serial(device_id)
+
+                            # より具体的なデバイス名のみを保持
+                            # Composite Deviceは除外し、iPhone/iPadの名前があるもののみ使用
+                            if "USB Composite Device" in device_name:
+                                continue  # Composite Deviceをスキップ
+
+                            # より適切なデバイス名を選択
+                            if "iPhone" in device_name or "iPad" in device_name:
+                                display_name = device_name
+                            else:
+                                display_name = device_name
+
+                            # 重複チェック（同じシリアル番号を持つデバイスをスキップ）
+                            if serial_number in seen_devices:
+                                continue
+
+                            seen_devices.add(serial_number)
+
                             device = DeviceInfo(
                                 device_id=device_id,
                                 device_type=DeviceType.IOS,
-                                display_name=device_name,
+                                display_name=display_name,
                                 manufacturer="Apple",
+                                serial_number=serial_number,
                                 protocol=TransferProtocol.AFC,
                                 connection_status=ConnectionStatus.CONNECTED,
                                 available_paths=[
